@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Echo">
+
+
+
+    <meta name="description" content="blog">
+
+
+
+<title>NO2:Node JS + MySQL CRUD Workshop - Insert, Update, Select, Delete | Echo的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Echo&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Echo&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">NO2:Node JS + MySQL CRUD Workshop - Insert, Update, Select, Delete</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Echo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 1, 2020&nbsp;&nbsp;10:00:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <meta name="referrer" content="no-referrer">
+
+<p>你可能需要：<br><a href="https://www.jianshu.com/p/96df1d7bef0b" target="_blank" rel="noopener">NO1:使用 Node.js + Express 开发服务端</a></p>
+<h2 id="一、安装项目："><a href="#一、安装项目：" class="headerlink" title="一、安装项目："></a>一、安装项目：</h2><p><strong><code>step1: install express module</code></strong><br><strong><code>step2: install express-generator module</code></strong><br><strong><code>step3: create project  myapp with command</code></strong><br><strong><code>step4: setup all file</code></strong><br><strong><code>step5: open project  in editor</code></strong></p>
+<ul>
+<li>安装node+express项目</li>
+</ul>
+<p>并将项目views文件夹转换为ejs格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm install express -g</span><br><span class="line">$ npm install express-generator -g</span><br><span class="line">$ express --view=ejs Node //Node为项目名称</span><br></pre></td></tr></table></figure></p>
+<p>参考 <a href="https://www.jianshu.com/p/96df1d7bef0b" target="_blank" rel="noopener">使用 Node.js + Express 开发服务端</a></p>
+<ul>
+<li>安装mysql</li>
+</ul>
+<p>参考：<br><a href="https://www.jianshu.com/p/957026a0af8c" target="_blank" rel="noopener">https://www.jianshu.com/p/957026a0af8c</a><br><a href="https://www.runoob.com/mysql/mysql-install.html" target="_blank" rel="noopener">https://www.runoob.com/mysql/mysql-install.html</a></p>
+<h2 id="二、安装相关依赖"><a href="#二、安装相关依赖" class="headerlink" title="二、安装相关依赖"></a>二、安装相关依赖</h2><p><strong><code>step6: install mysql module</code></strong><br><strong><code>step7: install nodemon module</code></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mysql nodemon</span><br></pre></td></tr></table></figure></p>
+<p>项目初始化成功之后，结构如下<br><img src="https://upload-images.jianshu.io/upload_images/11846892-072cb81ef93f33d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><strong><code>step8: start server with npx nodemon</code></strong></p>
+<p>终端执行命令<code>npx nodemon</code>启动项目</p>
+<p><strong><code>step9: test server with localhost:3000</code></strong></p>
+<p>在浏览器中访问<code>http://localhost:3000</code>,可以看到<br><img src="https://upload-images.jianshu.io/upload_images/11846892-8a0a17bbf47833d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><strong><code>step10: connect mysql database - create Database - create table</code></strong></p>
+<ul>
+<li>create Database</li>
+</ul>
+<ol>
+<li>安装mysql可视化工具：<a href="http://www.navicat.com.cn/products/" target="_blank" rel="noopener">Navicat Premium</a></li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/11846892-5fa9af6b17b1d45c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>名为<code>tb_book</code><br><img src="https://upload-images.jianshu.io/upload_images/11846892-287f39ec13eaeca5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ol start="2">
+<li>通过代码创建数据库+table<br>👇继续向下看</li>
+</ol>
+<h2 id="三、连接数据库-并-实现Insert-Update-Select-Delete"><a href="#三、连接数据库-并-实现Insert-Update-Select-Delete" class="headerlink" title="三、连接数据库 并 实现Insert, Update, Select, Delete"></a>三、连接数据库 并 实现Insert, Update, Select, Delete</h2><p>在<code>routes/index.js</code>据你的实际配置修改数据库用户名、及密码及数据库名：</p>
+<p>####通过代码创建数据库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">var express = require(&apos;express&apos;);</span><br><span class="line">var router = express.Router();</span><br><span class="line">var mysql = require(&apos;mysql&apos;);</span><br><span class="line">var db = mysql.createConnection(&#123;</span><br><span class="line">  host     : &apos;localhost&apos;,</span><br><span class="line">  user     : &apos;root&apos;,</span><br><span class="line">  password : &apos;1234567w&apos;,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// connect</span><br><span class="line">db.connect((err) =&gt; &#123;</span><br><span class="line">  if (err) &#123;</span><br><span class="line">    throw err;</span><br><span class="line">  &#125;</span><br><span class="line">  console.log(&apos;Mysql Connected ...&apos;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// Create DB</span><br><span class="line">router.get(&apos;/createdb&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let sql = &apos;CREATE DATABASE nodemysql&apos;;</span><br><span class="line">  db.query(sql, (err, result) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(result)</span><br><span class="line">    res.send(&apos;database created...&apos;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">/* GET home page. */</span><br><span class="line">router.get(&apos;/&apos;, function(req, res, next) &#123;</span><br><span class="line">  res.render(&apos;index&apos;, &#123; title: &apos;Express&apos; &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">module.exports = router;</span><br></pre></td></tr></table></figure></p>
+<p>在终端可以看到连接成功<br><img src="https://upload-images.jianshu.io/upload_images/11846892-4c400f5a66ee4489.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>在浏览器中访问<code>http://localhost:3000/createdb</code>,可以看到数据库创建成功！<br><img src="https://upload-images.jianshu.io/upload_images/11846892-a11076e500f9b461.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>在终端可以看到<br><img src="https://upload-images.jianshu.io/upload_images/11846892-e2bbf12b1267b7e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>同样打开可视化工具也可以看到<code>nodemysql</code>创建成功</p>
+<h2 id><a href="#" class="headerlink" title></a><img src="https://upload-images.jianshu.io/upload_images/11846892-34169c49fb70ab88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></h2><p>####通过代码创建table<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">var express = require(&apos;express&apos;);</span><br><span class="line">var router = express.Router();</span><br><span class="line">var mysql = require(&apos;mysql&apos;);</span><br><span class="line">var db = mysql.createConnection(&#123;</span><br><span class="line">  host     : &apos;localhost&apos;,</span><br><span class="line">  user     : &apos;root&apos;,</span><br><span class="line">  password : &apos;1234567w&apos;,</span><br><span class="line">  database : &apos;nodemysql&apos;</span><br><span class="line">&#125;)</span><br><span class="line">// Create table</span><br><span class="line">router.get(&apos;/createpoststable&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let sql = &apos;CREATE TABLE posts(id int AUTO_INCREMENT, title VARCHAR(255), body VARCHAR(255), PRIMARY KEY (id))&apos;;</span><br><span class="line">  db.query(sql, (err, result) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(result)</span><br><span class="line">    res.send(&apos;Posts table created...&apos;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>在浏览器中访问<code>http://localhost:3000/createpoststable</code>,可以看到table创建成功！<br><img src="https://upload-images.jianshu.io/upload_images/11846892-9bdffb7b567a8943.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>同样打开可视化工具也可以看到<code>posts</code>创建成功<br><img src="https://upload-images.jianshu.io/upload_images/11846892-dcc66a46fedf5f63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<hr>
+<p>####通过代码向table中插入数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">var express = require(&apos;express&apos;);</span><br><span class="line">var router = express.Router();</span><br><span class="line">var mysql = require(&apos;mysql&apos;);</span><br><span class="line">var db = mysql.createConnection(&#123;</span><br><span class="line">  host     : &apos;localhost&apos;,</span><br><span class="line">  user     : &apos;root&apos;,</span><br><span class="line">  password : &apos;1234567w&apos;,</span><br><span class="line">  database : &apos;nodemysql&apos;</span><br><span class="line">&#125;)</span><br><span class="line">// Inset posts 1 </span><br><span class="line">router.get(&apos;/addpost1&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let post = &#123;title: &apos;Post One&apos;, body: &apos;This is post number one&apos;&#125;</span><br><span class="line">  let sql = &apos;INSERT INTO posts SET ?&apos;;</span><br><span class="line">  let query = db.query(sql, post, (err, result) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(result)</span><br><span class="line">    res.send(&apos;Posts 1 added...&apos;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>在浏览器中访问<code>http://localhost:3000/addpost1</code>,可以看到插入数据成功！<br><img src="https://upload-images.jianshu.io/upload_images/11846892-78969b08e73453c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>同样打开可视化工具也可以看到<code>posts</code>数据插入成功<br><img src="https://upload-images.jianshu.io/upload_images/11846892-05a83c50ec127fe9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<hr>
+<p>####通过代码读取table中数据</p>
+<ol>
+<li>读取表中全部数据<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">...</span><br><span class="line">// SELECT posts </span><br><span class="line">router.get(&apos;/getposts&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let sql = &apos;SELECT * FROM posts&apos;;</span><br><span class="line">  let query = db.query(sql, (err, results) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(results)</span><br><span class="line">    res.send(&apos;Posts fetched...&apos;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)...</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在浏览器中访问<code>http://localhost:3000/getposts</code>,可以看到读取数据成功！<br><img src="https://upload-images.jianshu.io/upload_images/11846892-cfc7f96056b9c9e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>终端可以看到读取的数据：<br><img src="https://upload-images.jianshu.io/upload_images/11846892-c37d906b8b1a4715.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ol start="2">
+<li>根据id读取表中部分数据<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//index.js</span><br><span class="line">// SELECT Single post </span><br><span class="line">router.get(&apos;/getpost/:id&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let sql = `SELECT * FROM posts WHERE id = $&#123;req.params.id&#125;`;</span><br><span class="line">  let query = db.query(sql, (err, result) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(result)</span><br><span class="line">    res.send(&apos;Post fetched...&apos;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在浏览器中访问<code>http://localhost:3000/getpost/1</code>  + <code>http://localhost:3000/getpost/6</code>,可以看到读取数据成功！<br><img src="https://upload-images.jianshu.io/upload_images/11846892-8ddc897ea7ca94e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>终端可以看到读取的数据：<br><img src="https://upload-images.jianshu.io/upload_images/11846892-c5fe383c4a015b47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<hr>
+<p>####通过代码更新table中数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">// UPDATE Single post </span><br><span class="line">router.get(&apos;/updatepost/:id&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let newTitle = &apos;Updated Title&apos;</span><br><span class="line">  let sql = `UPDATE posts SET title = &apos;$&#123;newTitle&#125;&apos; WHERE id = $&#123;req.params.id&#125;`;</span><br><span class="line">  let query = db.query(sql, (err, result) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(result)</span><br><span class="line">    res.send(&apos;Post updated...&apos;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>在浏览器中访问<code>[http://localhost:3000/updatepost/1](http://localhost:3000/updatepost/1)</code>,可以看到更新数据成功<br><img src="https://upload-images.jianshu.io/upload_images/11846892-fb5f75a2454fc15d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>同样打开可视化工具也可以看到<code>posts</code>数据更新成功<br><img src="https://upload-images.jianshu.io/upload_images/11846892-8168a3494b1efcd3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<hr>
+<p>####通过代码删除table中数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">// DELETE post </span><br><span class="line">router.get(&apos;/deletepost/:id&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let newTitle = &apos;Updated Title&apos;</span><br><span class="line">  let sql = `DELETE FROM posts WHERE id = $&#123;req.params.id&#125;`;</span><br><span class="line">  let query = db.query(sql, (err, result) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(result)</span><br><span class="line">    res.send(&apos;Post updated...&apos;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>在浏览器中访问<code>[http://localhost:3000/deletepost/1](http://localhost:3000/updatepost/1)</code>,可以看到删除数据成功<br><img src="https://upload-images.jianshu.io/upload_images/11846892-5c34c189dee174cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="四、通过模版语言展示数据库数据"><a href="#四、通过模版语言展示数据库数据" class="headerlink" title="四、通过模版语言展示数据库数据"></a>四、通过模版语言展示数据库数据</h2><p><strong><code>step11: show data</code> </strong><br>在<code>routes/index.js</code>新增如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// SHOW posts </span><br><span class="line">router.get(&apos;/getpostsData&apos;, (req,res)=&gt; &#123;</span><br><span class="line">  let sql = &apos;SELECT * FROM posts&apos;;</span><br><span class="line">  let query = db.query(sql, (err, results) =&gt; &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    console.log(results)</span><br><span class="line">    res.render(&apos;select&apos;, &#123; books:results &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>新建<code>views/select.ejs</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;Books Data&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">&lt;table&gt;</span><br><span class="line">  &lt;tr&gt;</span><br><span class="line">    &lt;td&gt;id&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;title&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;body&lt;/td&gt;</span><br><span class="line">  &lt;/tr&gt;</span><br><span class="line">  &lt;% books.forEach(function(item) &#123; %&gt;</span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">      &lt;td&gt;&lt;%= item.id %&gt;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&lt;%= item.title %&gt;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&lt;%= item.body %&gt;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">  &lt;% &#125;); %&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在浏览器中访问<code>http://localhost:3000/getpostsData</code>,可以看到数据展示成功！<br><img src="https://upload-images.jianshu.io/upload_images/11846892-f58fed086c4ac67d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>我们同样可以使用模版语言实现通过页面进行<code>增删改查</code>操作。</p>
+<h2 id="再见👋。"><a href="#再见👋。" class="headerlink" title="再见👋。"></a>再见👋。</h2><p>总结：大功告成✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️✌️</p>
+<p>你可能需要：<br><a href="https://www.jianshu.com/p/62d034e4ca8f" target="_blank" rel="noopener">NO3:Node.js + mysql+Sequelize实现注册接口及校验逻辑</a></p>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Node/"># Node</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/09/01/Node5/">NO3:Node.js + mysql+Sequelize实现注册接口及校验逻辑</a>
+            
+            
+            <a class="next" rel="next" href="/2020/07/27/Software1/">macOS 上安裝 MySQL</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Echo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
